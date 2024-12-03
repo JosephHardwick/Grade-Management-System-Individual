@@ -37,7 +37,6 @@
             YearL = new Label();
             GradeL = new Label();
             CRNL = new Label();
-            GradeCB = new ComboBox();
             SemeterCB = new ComboBox();
             PrefixTB = new TextBox();
             NumberTB = new TextBox();
@@ -48,6 +47,7 @@
             NameRB = new RadioButton();
             button1 = new Button();
             button2 = new Button();
+            GradeCB = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -130,17 +130,9 @@
             CRNL.TabIndex = 11;
             CRNL.Text = "CRN:";
             // 
-            // GradeCB
-            // 
-            GradeCB.FormattingEnabled = true;
-            GradeCB.Items.AddRange(new object[] { "A", "B", "C", "D", "F" });
-            GradeCB.Location = new Point(133, 188);
-            GradeCB.Name = "GradeCB";
-            GradeCB.Size = new Size(100, 23);
-            GradeCB.TabIndex = 12;
-            // 
             // SemeterCB
             // 
+            SemeterCB.DropDownStyle = ComboBoxStyle.DropDownList;
             SemeterCB.FormattingEnabled = true;
             SemeterCB.Items.AddRange(new object[] { "Fall", "Winter", "Spring", "Summer" });
             SemeterCB.Location = new Point(9, 241);
@@ -229,6 +221,16 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // GradeCB
+            // 
+            GradeCB.DropDownStyle = ComboBoxStyle.DropDownList;
+            GradeCB.FormattingEnabled = true;
+            GradeCB.Items.AddRange(new object[] { "A", "B", "C", "D", "F" });
+            GradeCB.Location = new Point(133, 188);
+            GradeCB.Name = "GradeCB";
+            GradeCB.Size = new Size(100, 23);
+            GradeCB.TabIndex = 12;
+            // 
             // AddGrade
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -270,7 +272,6 @@
         private Label YearL;
         private Label GradeL;
         private Label CRNL;
-        private ComboBox GradeCB;
         private ComboBox SemeterCB;
         private TextBox PrefixTB;
         private TextBox NumberTB;
@@ -281,5 +282,6 @@
         private RadioButton NameRB;
         private Button button1;
         private Button button2;
+        private ComboBox GradeCB;
     }
 }

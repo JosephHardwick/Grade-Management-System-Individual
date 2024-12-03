@@ -23,6 +23,19 @@ namespace Grade_Management_System_Individual
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            if(textBox1.Text == "")
+            {
+                MessageBox.Show("Please enter a student ID");
+                return;
+            }
+
+            if (!int.TryParse(textBox1.Text, out int studentID))
+            {
+                MessageBox.Show("Invalid student ID. Please enter a numeric value.");
+                return;
+            }
+
             //validate that student exists
             if (!Student.ifExists(int.Parse(textBox1.Text)))
             {
@@ -106,10 +119,17 @@ namespace Grade_Management_System_Individual
 
                     doc.Add(table);
                     doc.Close();
+
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    { 
+                    FileName = filePath,
+                        UseShellExecute = true
+                    });
+                }
                 }
             }
         }
 
     }
-}
+
 

@@ -14,6 +14,7 @@ using Microsoft.VisualBasic.Devices;
 using MySql.Data.MySqlClient;
 using System.IO;
 
+
 namespace Grade_Management_System_Individual
 {
     public partial class ImportGrade : Form
@@ -37,7 +38,7 @@ namespace Grade_Management_System_Individual
                 filePath = openFileDialog1.FileName;
                 file = openFileDialog1.SafeFileName;
                 fileNoEx = file.Substring(0, file.Length - 5);
-                MessageBox.Show(file);
+                //MessageBox.Show(file);
             }
 
             if (!IsValidFileName(file))
@@ -54,9 +55,11 @@ namespace Grade_Management_System_Individual
                 CRN = Course.createCourse(fileNameDetails[0], fileNameDetails[1], fileNameDetails[2], fileNameDetails[3], int.Parse(fileNameDetails[4]));
             }
 
-            //setup .xlsx reader
+            //insert grades
             GradeInserions(filePath, CRN);
-            
+            MessageBox.Show("grades inserted successfully");
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -78,8 +81,8 @@ namespace Grade_Management_System_Individual
                     return;
                 }
             }
-                MessageBox.Show(folderPath);
-                MessageBox.Show(folderName);
+                //MessageBox.Show(folderPath);
+                //MessageBox.Show(folderName);
                 
                 //parsing filepaths, names, and raw names for later validation
                 string[] filePaths = Directory.GetFiles(folderPath, "*.xlsx");
@@ -90,7 +93,7 @@ namespace Grade_Management_System_Individual
             for (int i = 0; i < fileNames.Length; i++)
             {
                 fileNames[i] = fileNames[i].Substring(fileNames[i].LastIndexOf("\\") + 1);
-                MessageBox.Show(fileNames[i]);
+                //MessageBox.Show(fileNames[i]);
             }
 
             //creating fileNames array without extension
@@ -100,7 +103,7 @@ namespace Grade_Management_System_Individual
                 fileNamesNoEx[i] = fileNamesNoEx[i].Substring(0, fileNamesNoEx[i].Length - 5);
                
 
-                MessageBox.Show(fileNamesNoEx[i]);
+                //MessageBox.Show(fileNamesNoEx[i]);
             }
 
 
@@ -110,7 +113,7 @@ namespace Grade_Management_System_Individual
             {
                 if(IsValidFileNameFromFolder(fileNames[i]))
                 {
-                    MessageBox.Show("Valid file name " + fileNames[i]);
+                    //MessageBox.Show("Valid file name " + fileNames[i]);
                 }
                 else
                 {
@@ -131,10 +134,10 @@ namespace Grade_Management_System_Individual
                 int CRN = Course.getCRN(fileDetails[0], fileDetails[1], folderDetails[1], folderDetails[2]);
                 if (CRN == -1)
                 {
-                    MessageBox.Show("Creating course: " + fileDetails[0] + " " + fileDetails[1]);
+                    MessageBox.Show("course: " + fileDetails[0] + " " + fileDetails[1]+ " Does not exist in the database. it will now be created.");
                     CRN = Course.createCourse(fileDetails[0], fileDetails[1], folderDetails[1], folderDetails[2], int.Parse(fileDetails[2]));
                 }
-                MessageBox.Show("CRN: " + CRN);
+                //MessageBox.Show("CRN: " + CRN);
 
             }
             //At this point, both file/folder name validation is done
@@ -151,6 +154,8 @@ namespace Grade_Management_System_Individual
                 int CRN = Course.getCRN(fileDetails[0], fileDetails[1], folderDetails[1], folderDetails[2]);
                 GradeInserions(filePaths[i], CRN);
             }
+            MessageBox.Show("grades inserted successfully");
+
 
 
 
@@ -217,6 +222,8 @@ namespace Grade_Management_System_Individual
 
         private void GradeInserions(string filePath, int CRN)
         {
+            IronXL.License.LicenseKey = "IRONSUITE.JOSEPHHARDWICK04.GMAIL.COM.22294-29C49DA80D-JJEIV-V5VLMKZCCM4P-CZ2IVHPSSYAR-EEY4W3JWWWJH-XXOA4PUGSQID-MR3GM4ARNUSQ-EEJVOQR6HOBD-M722E4-TDKLWRRI5RSOEA-DEPLOYMENT.TRIAL-WPI7OV.TRIAL.EXPIRES.01.JAN.2025";
+
             var workbook = WorkBook.Load(filePath);
             var workSheet = workbook.WorkSheets.First();
             var cell = workSheet["A2"];
@@ -245,10 +252,10 @@ namespace Grade_Management_System_Individual
                 //if student does not exist, create them
                 if (!Student.ifExists(studentID))
                 {
-                    MessageBox.Show("Creating DB entry for: " + workSheet[$"A{i}"].StringValue);
                     int newID = Student.createStudent(workSheet[$"A{i}"].StringValue);
+                    MessageBox.Show("Student: " + workSheet[$"A{i}"].StringValue + " Does not exist in the database. they will now be created and assigned ID: "+ newID);
 
-                    MessageBox.Show("auto inc returned" + newID.ToString());
+                    //MessageBox.Show("auto inc returned" + newID.ToString());
                     workSheet[$"B{i}"].Value = newID;
                     workbook.Save();
 
@@ -265,7 +272,7 @@ namespace Grade_Management_System_Individual
                 
                 if (GradeExists(studentID, CRN))
                 {
-                    MessageBox.Show("Student : " + workSheet[$"A{i}"].StringValue + "already has a grade of ");
+                    MessageBox.Show("Student : " + workSheet[$"A{i}"].StringValue + " already has a grade in this course ");
                     return;
                 }
 
@@ -300,7 +307,6 @@ namespace Grade_Management_System_Individual
 
             }
 
-            MessageBox.Show("grades inserted successfully");
         }
 
        

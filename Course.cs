@@ -184,7 +184,7 @@ namespace Grade_Management_System_Individual
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                MessageBox.Show("Name error");
+                //MessageBox.Show("Name error");
             }
             conn.Close();
             return "";
@@ -351,7 +351,7 @@ namespace Grade_Management_System_Individual
             string query = "INSERT INTO hardwick_course  (Prefix, Year, Semester, Number, Hours) VALUES (@Prefix, @Year, @Semester, @Number, @Hours)";
 
             MySql.Data.MySqlClient.MySqlConnection conn = new MySql.Data.MySqlClient.MySqlConnection(connStr);
-            MessageBox.Show("RUNNING CRN METHOD");
+            //MessageBox.Show("RUNNING CRN METHOD");
 
             try
             {

@@ -83,7 +83,13 @@ namespace Grade_Management_System_Individual
                     return;
                 }
 
-                if (Student.ifExists(Convert.ToInt32(studentID)) == false)
+                if (!int.TryParse(studentID, out int parsedStudentID))
+                {
+                    MessageBox.Show("Please enter a valid numeric Student ID");
+                    return;
+                }
+
+                if (Student.ifExists(parsedStudentID) == false)
                 {
                     MessageBox.Show("Student does not exist");
                     return;
@@ -125,15 +131,17 @@ namespace Grade_Management_System_Individual
                     cmd.Parameters.AddWithValue("@Grade", grade);
                     cmd.ExecuteNonQuery();
 
-
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
                     MessageBox.Show(ex.ToString());
+                    
                 }
                 //close the connection
                 conn.Close();
+                MessageBox.Show("Grade added successfully");
+
 
 
 
@@ -147,10 +155,26 @@ namespace Grade_Management_System_Individual
                 string studentID = StudentIDTB.Text;
                 string CRN = CRNTB.Text;
 
-                //validate data for course existing
-                if (!Course.ifExists(Convert.ToInt32(CRN)))
+
+                //validation that all fileds are entered
+                if (studentID == "" || CRN == "" || grade == "")
                 {
-                    MessageBox.Show("please enter valid CRN");
+                    MessageBox.Show("Please fill out all fields");
+                    return;
+                }
+
+                //validate data for course existing
+                // Validate CRN input
+                if (!int.TryParse(CRN, out int parsedCRN))
+                {
+                    MessageBox.Show("Please enter a valid numeric CRN");
+                    return;
+                }
+
+                // Validate data for course existing
+                if (!Course.ifExists(parsedCRN))
+                {
+                    MessageBox.Show("Please enter a valid CRN");
                     return;
                 }
 
@@ -160,6 +184,8 @@ namespace Grade_Management_System_Individual
                     MessageBox.Show("Please enter a valid grade (A, B, C, D, F)");
                     return;
                 }
+
+               
 
                 //validating for if a valid student is entered
                 if (Student.ifExists(Convert.ToInt32(studentID)) == false)
@@ -193,6 +219,7 @@ namespace Grade_Management_System_Individual
                     cmd.ExecuteNonQuery();
 
 
+
                 }
                 catch (Exception ex)
                 {
@@ -201,6 +228,7 @@ namespace Grade_Management_System_Individual
                 }
                 //close the connection
                 conn.Close();
+                MessageBox.Show("Grade added successfully");
 
 
             }

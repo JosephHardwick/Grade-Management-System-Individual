@@ -239,7 +239,7 @@ namespace Grade_Management_System_Individual
             double updatedGPA = (double)totalPoints / totalHours;
             
             //add the updated GPA to the database
-            MessageBox.Show("INSIDE UPDATE METHOD GPA: " + updatedGPA);
+            //MessageBox.Show("INSIDE UPDATE METHOD GPA: " + updatedGPA);
             //UPDATE cabj_studentinfo_1 SET GPA = @GPA WHERE ID = @ID
             query = "UPDATE hardwick_student SET GPA = @GPA WHERE StudentID = @ID";
             try
@@ -254,7 +254,7 @@ namespace Grade_Management_System_Individual
                 cmd.Parameters.AddWithValue("@ID", ID);
                 cmd.Parameters.AddWithValue("@GPA", updatedGPA);
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("GPA updated successfully");
+                //MessageBox.Show("GPA updated successfully");
 
 
             }

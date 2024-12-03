@@ -37,7 +37,14 @@ namespace Grade_Management_System_Individual
         {
             //refreshes list
             listView1.Items.Clear();
-            StudentID = int.Parse(SIDField.Text);
+
+            if (!int.TryParse(SIDField.Text, out int studentID))
+            {
+                MessageBox.Show("Please enter a valid numeric Student ID.");
+                return;
+            }
+
+            StudentID = studentID;
 
             //check if student exists
             if (!Student.ifExists(StudentID))
@@ -45,7 +52,6 @@ namespace Grade_Management_System_Individual
                 MessageBox.Show("Student does not exist");
                 return;
             }
-
             //query to get grades for student
             string connStr = "server=csitmariadb.eku.edu;user=student;database=csc340_db;port=3306;password=Maroon@21?;";
             string query = "SELECT * FROM hardwick_grades JOIN hardwick_course ON hardwick_course.CRN = hardwick_grades.CRN WHERE StudentID = @ID";
@@ -94,6 +100,12 @@ namespace Grade_Management_System_Individual
             string query = "DELETE FROM hardwick_grades WHERE CRN = @CRN AND StudentID = @SID";
             MySqlConnection conn = new MySqlConnection(connStr);
 
+            if (listView1.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("Please select a grade to delete");
+                return;
+            }
+
             string CRN = listView1.SelectedItems[0].Tag.ToString();
 
             try
@@ -103,6 +115,7 @@ namespace Grade_Management_System_Individual
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@SID", StudentID);
+                //MessageBox.Show(StudentID.ToString());
                 cmd.Parameters.AddWithValue("@CRN", CRN);
                 cmd.ExecuteNonQuery();
 
@@ -113,7 +126,7 @@ namespace Grade_Management_System_Individual
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show(ex.ToString());
             }
-            listView1.Items.Clear();
+            
             Searchforstudent_Click(this, EventArgs.Empty);
         }
 
