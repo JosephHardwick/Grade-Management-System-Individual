@@ -14,16 +14,16 @@ namespace Grade_Management_System_Individual
     {
         private static readonly string connStr = "server=csitmariadb.eku.edu;user=student;database=csc340_db;port=3306;password=Maroon@21?;";
 
-        public int StudentID;
-        public string Name;
-        public double GPA;
+        //public int StudentID;
+        //public string Name;
+        //public double GPA;
 
-        public Student(int ID)
-        {
-            this.StudentID = ID;
-            this.Name = GetName(ID);
-            this.GPA = GetGPA(ID);
-        }
+        //public Student(int ID)
+        //{
+        //    this.StudentID = ID;
+        //    this.Name = GetName(ID);
+        //    this.GPA = GetGPA(ID);
+        //}
 
 
         //method to check if student exists
@@ -233,7 +233,7 @@ namespace Grade_Management_System_Individual
 
             if (totalPoints == 0)//dont divide by zero if student is failing all classes
             {
-                MessageBox.Show("divide by zero");
+                //MessageBox.Show("divide by zero");
                 return;
             }
             double updatedGPA = (double)totalPoints / totalHours;

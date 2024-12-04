@@ -46,6 +46,7 @@ namespace Grade_Management_System_Individual
             //get student info
             String ID = textBox1.Text;
             String Name = Student.GetName(int.Parse(ID));
+            Student.updateGPA(int.Parse(ID));
             String GPA = Student.GetGPA(int.Parse(ID)).ToString();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
